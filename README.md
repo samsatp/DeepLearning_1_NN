@@ -1,1 +1,2 @@
-# DeepLearning_1_NN
+# Learning DeepLearning 1: Neural Network very basic
+---
