@@ -83,18 +83,24 @@ class Value:
 
     def backward(self):
         self.grad = 1.0
-        def DFS(root):
-            output_order = []
-            stack = [root]
-            visited = set()
-            while len(stack) > 0:
-                top = stack.pop(-1)
-                output_order.append(top)
-                visited.add(top)
-                if len(top._previous) - len(set(top._previous).intersection(visited)) > 0:
-                    stack.extend(top._previous) 
-            return output_order
 
-        output_order = DFS(self)
+        def bfs(root): #function for BFS
+            visited = []
+            queue = []
+            visited.append(root)
+            queue.append(root)
+
+            out = []
+            while queue:          # Creating loop to visit each node
+                m = queue.pop(0) 
+                out.append(m)
+
+                for neighbour in m._previous:
+                    if neighbour not in visited:
+                        visited.append(neighbour)
+                        queue.append(neighbour)
+
+            return out
+        output_order = bfs(self)
         for node in output_order:
             node._backward()
