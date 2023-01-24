@@ -10,6 +10,8 @@ class Value:
         self._previous = previous
 
     def __repr__(self) -> str:
+        if self.label != "":
+            return f"Value(label = {self.label}, data = {self.data})"
         return f"Value(data = {self.data})"
 
     def __add__(self, other):
@@ -84,10 +86,12 @@ class Value:
         def DFS(root):
             output_order = []
             stack = [root]
+            visited = set()
             while len(stack) > 0:
                 top = stack.pop(-1)
                 output_order.append(top)
-                if len(top._previous):
+                visited.add(top)
+                if len(top._previous) - len(set(top._previous).intersection(visited)) > 0:
                     stack.extend(top._previous) 
             return output_order
 
