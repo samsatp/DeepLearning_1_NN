@@ -81,16 +81,16 @@ class Value:
 
     def backward(self):
         self.grad = 1.0
-        def BFS(root):
+        def DFS(root):
             output_order = []
             stack = [root]
             while len(stack) > 0:
-                top = stack.pop(0)
+                top = stack.pop(-1)
                 output_order.append(top)
                 if len(top._previous):
                     stack.extend(top._previous) 
             return output_order
 
-        output_order = BFS(self)
+        output_order = DFS(self)
         for node in output_order:
             node._backward()
